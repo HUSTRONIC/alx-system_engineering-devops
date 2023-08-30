@@ -1,2 +1,1 @@
-#!/bin/bash
-this is the repository in the second shell navigation project.
+0x00-shell_basics
