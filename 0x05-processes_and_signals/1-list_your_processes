@@ -1,44 +1,6 @@
 #!/usr/bin/env bash
-
-# Function to display process hierarchy recursively
-show_tree() {
-    local pid=$1
-    local ppid=$2
-    local prefix=$3
-    local indent=$4
-    
-    local pname=$(ps -p $pid -o comm=)
-    local puser=$(ps -p $pid -o user=)
-    local pcpu=$(ps -p $pid -o %cpu=)
-    local pmem=$(ps -p $pid -o %mem=)
-    local vsz=$(ps -p $pid -o vsz=)
-    local rss=$(ps -p $pid -o rss=)
-    local tty=$(ps -p $pid -o tty=)
-    local stat=$(ps -p $pid -o stat=)
-    local start=$(ps -p $pid -o start=)
-    local time=$(ps -p $pid -o time=)
-    
-    printf "%-8s %-5s %-5s %-10s %-10s %-5s %-5s %-5s %-10s %s\n" "$puser" "$pid" "$pcpu" "$pmem" "$vsz" "$rss" "$tty" "$stat" "$start" "$pname"
-
-    local children=$(pgrep -P $pid)
-    for child in $children; do
-        show_tree $child $pid "  $prefix" "  $indent"
-    done
-}
-
-# Display header
-printf "%-8s %-5s %-5s %-10s %-10s %-5s %-5s %-5s %-10s %s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "START" "COMMAND"
-
-# Iterate over all processes
-for pid in $(ps -eo pid=); do
-    # Check if it's a root process
-    ppid=$(ps -p $pid -o ppid=)
-    if [ $ppid -eq 0 ]; then
-        show_tree $pid 0 "" ""
-    fi
+# This script is displaying "Holberton School" 10 times
+for (( i=0; i<10; i++ ))
+do
+    echo "Best School"
 done
-
-# Display 50 lines of currently running processes
-echo "------------------------------------"
-echo "Showing 50 lines of currently running processes:"
-ps aux | head -n 50
